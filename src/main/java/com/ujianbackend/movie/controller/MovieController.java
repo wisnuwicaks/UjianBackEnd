@@ -54,8 +54,8 @@ public class MovieController {
     public void deleteMovie(@PathVariable int movieId){
         Movie findMovie = movieRepo.findById(movieId).get();
         findMovie.getCategories().forEach(category -> {
-            List<Movie> movieCategories = category.getMovies();
-            movieCategories.remove(findMovie);
+//            List<Movie> movieCategories = category.getMovies();
+            category.getMovies().remove(findMovie);
             categoryRepo.save(category);
         });
 
