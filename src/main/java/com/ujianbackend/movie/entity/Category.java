@@ -6,12 +6,13 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+//@Table(name = "categories")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String name;
+    private String nama;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.DETACH, CascadeType.PERSIST,CascadeType.REFRESH })
     @JoinTable(name = "movie_category", joinColumns = @JoinColumn(name = "category_id"),
@@ -27,12 +28,12 @@ public class Category {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNama() {
+        return nama;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNama(String nama) {
+        this.nama = nama;
     }
 
     public List<Movie> getMovies() {

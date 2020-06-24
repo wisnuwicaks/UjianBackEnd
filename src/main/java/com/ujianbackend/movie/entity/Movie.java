@@ -6,24 +6,32 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+//@Table(name = "movies")
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String name;
-    private int year;
-    private String description;
-//
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.DETACH, CascadeType.PERSIST,CascadeType.REFRESH })
-//    @JoinTable(name = "project_employee", joinColumns = @JoinColumn(name = "employee_id"),
-//            inverseJoinColumns = @JoinColumn(name = "project_id"))
-//    private List<Project> projects;
+    private String nama;
+    private int tahun;
+    private String deskripsi;
 
+    //========Many to Many========//
     @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.DETACH, CascadeType.PERSIST,CascadeType.REFRESH })
     @JoinTable(name = "movie_category", joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categories;
+    //============================//
+
+    //========One to Many========//
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie", cascade = CascadeType.ALL)
+//    @JsonIgnore
+//    private List<Karakter> karakters;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Karakter> karakters;
+    //============================//
+
 
     public int getId() {
         return id;
@@ -33,28 +41,28 @@ public class Movie {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNama() {
+        return nama;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNama(String nama) {
+        this.nama = nama;
     }
 
-    public int getYear() {
-        return year;
+    public int getTahun() {
+        return tahun;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setTahun(int tahun) {
+        this.tahun = tahun;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDeskripsi() {
+        return deskripsi;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDeskripsi(String deskripsi) {
+        this.deskripsi = deskripsi;
     }
 
     public List<Category> getCategories() {
@@ -63,5 +71,13 @@ public class Movie {
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
+    }
+
+    public List<Karakter> getKarakters() {
+        return karakters;
+    }
+
+    public void setKarakters(List<Karakter> karakters) {
+        this.karakters = karakters;
     }
 }
