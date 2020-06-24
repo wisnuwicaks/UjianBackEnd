@@ -69,16 +69,21 @@ public class MovieController {
     }
 
     @PutMapping("/{movieId}/deletecategory/{categoryId}")
-    public void deleteCategoryFromMovie(@PathVariable int movieId, @PathVariable int categoryId){
+    public Movie removeCategoryFromMovie(@PathVariable int movieId, @PathVariable int categoryId){
         Movie findMovie = movieRepo.findById(movieId).get();
         Category findCategory = categoryRepo.findById(categoryId).get();
-        findMovie.getCategories().forEach(category -> {
-            if(category.equals(findCategory)){
-                findMovie.getCategories().remove(category);
-                movieRepo.save(findMovie);
-            }
-        });
-//        return findMovie.getCategories();
+        if(findMovie.getCategories().contains(findCategory)){
+            findMovie.getCategories().remove(findCategory);
+            movieRepo.save(findMovie);
+        }
+//        findMovie.getCategories().forEach(category -> {
+//            if(category.equals(findCategory)){
+//                findMovie.getCategories().remove(category);
+//                movieRepo.save(findMovie);
+//            }
+//        });
+
+        return findMovie;
 
 
     }
