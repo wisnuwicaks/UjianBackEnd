@@ -35,7 +35,6 @@ public class CategoryController {
         return categoryRepo.save(category);
     }
 
-    //oke deh kjk
     @DeleteMapping("delete/{categoryId}")
     public void deleteMovie(@PathVariable int categoryId){
         Category findCategory = categoryRepo.findById(categoryId).get();
@@ -46,9 +45,12 @@ public class CategoryController {
         });
 
         findCategory.setMovies(null);
-
         categoryRepo.deleteById(categoryId);
+    }
 
-
+    @GetMapping("/{categoryId}/movies")
+    public List<Movie> getMovieWithCategoryId(@PathVariable int categoryId){
+        Category findCat = categoryRepo.findById(categoryId).get();
+        return findCat.getMovies();
     }
 }

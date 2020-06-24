@@ -42,7 +42,6 @@ public class MovieController {
 
     }
 
-
     @PutMapping("update/{movieId}")
     public Movie updateMovie(@PathVariable int movieId,@RequestBody Movie movie){
         Movie findMovie = movieRepo.findById(movieId).get();
@@ -63,6 +62,11 @@ public class MovieController {
 
         movieRepo.deleteById(movieId);
 
+    }
 
+    @GetMapping("/{movieId}/categories")
+    public List<Category> getCategoryWithMovieId(@PathVariable int movieId){
+        Movie findMovie = movieRepo.findById(movieId).get();
+        return findMovie.getCategories();
     }
 }

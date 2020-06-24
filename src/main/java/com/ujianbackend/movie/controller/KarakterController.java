@@ -46,5 +46,12 @@ public class KarakterController {
 
     }
 
+    @DeleteMapping("/delete/{characterId}")
+    public void deleteCharacter(@PathVariable int characterId){
+        Karakter findCharacter = karakterRepo.findById(characterId).get();
+        findCharacter.setMovie(null);
+        karakterRepo.deleteById(characterId);
+    }
+
 
 }
