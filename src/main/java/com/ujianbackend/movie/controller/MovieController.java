@@ -3,7 +3,6 @@ package com.ujianbackend.movie.controller;
 import com.ujianbackend.movie.dao.CategoryRepo;
 import com.ujianbackend.movie.dao.MovieRepo;
 import com.ujianbackend.movie.entity.Category;
-import com.ujianbackend.movie.entity.Karakter;
 import com.ujianbackend.movie.entity.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,9 +34,6 @@ public class MovieController {
     public Movie addMovieCategory (@PathVariable int movieId, @PathVariable int categoryId){
         Category findCategory = categoryRepo.findById(categoryId).get();
         Movie findMovie = movieRepo.findById(movieId).get();
-
-        System.out.println(findMovie);
-        System.out.println(findMovie.getCategories().toString());
         findMovie.getCategories().add(findCategory);
         return movieRepo.save(findMovie);
 
@@ -47,6 +43,7 @@ public class MovieController {
     public Movie updateMovie(@PathVariable int movieId,@RequestBody Movie movie){
         Movie findMovie = movieRepo.findById(movieId).get();
         movie.setId(movieId);
+        movie.setCategories(findMovie.getCategories());
         return movieRepo.save(movie);
     }
 
@@ -71,10 +68,21 @@ public class MovieController {
         return findMovie.getCategories();
     }
 
-    @GetMapping("/{movieId}/characters")
-    public List<Karakter> getCharacterWithMoviesId(@PathVariable int movieId){
+    @PutMapping("/{movieId}/deletecategory/{categoryId}")
+    public void deleteCategoryFromMovie(@PathVariable int movieId, @PathVariable int categoryId){
         Movie findMovie = movieRepo.findById(movieId).get();
-        return findMovie.getKarakters();
+        Category findCategory = categoryRepo.findById(categoryId).get();
+        findMovie.getCategories().forEach(category -> {
+            if(category.equals(findCategory)){
+                findMovie.getCategories().remove(category);
+                movieRepo.save(findMovie);
+            }
+        });
+//        return findMovie.getCategories();
+
+
     }
+
+
 
 }

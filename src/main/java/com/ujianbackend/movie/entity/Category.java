@@ -12,7 +12,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String nama;
+    private String categoryName;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.DETACH, CascadeType.PERSIST,CascadeType.REFRESH })
     @JoinTable(name = "movie_category", joinColumns = @JoinColumn(name = "category_id"),
@@ -28,12 +28,12 @@ public class Category {
         this.id = id;
     }
 
-    public String getNama() {
-        return nama;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setNama(String nama) {
-        this.nama = nama;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public List<Movie> getMovies() {

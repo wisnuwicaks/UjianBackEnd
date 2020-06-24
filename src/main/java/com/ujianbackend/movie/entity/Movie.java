@@ -12,24 +12,15 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String nama;
-    private int tahun;
-    private String deskripsi;
+    private String movieName;
+    private int yearRelease;
+
 
     //========Many to Many========//
     @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.DETACH, CascadeType.PERSIST,CascadeType.REFRESH })
     @JoinTable(name = "movie_category", joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categories;
-    //============================//
-
-    //========One to Many========//
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie", cascade = CascadeType.ALL)
-//    @JsonIgnore
-//    private List<Karakter> karakters;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Karakter> karakters;
     //============================//
 
 
@@ -41,28 +32,20 @@ public class Movie {
         this.id = id;
     }
 
-    public String getNama() {
-        return nama;
+    public String getMovieName() {
+        return movieName;
     }
 
-    public void setNama(String nama) {
-        this.nama = nama;
+    public void setMovieName(String movieName) {
+        this.movieName = movieName;
     }
 
-    public int getTahun() {
-        return tahun;
+    public int getYearRelease() {
+        return yearRelease;
     }
 
-    public void setTahun(int tahun) {
-        this.tahun = tahun;
-    }
-
-    public String getDeskripsi() {
-        return deskripsi;
-    }
-
-    public void setDeskripsi(String deskripsi) {
-        this.deskripsi = deskripsi;
+    public void setYearRelease(int yearRelease) {
+        this.yearRelease = yearRelease;
     }
 
     public List<Category> getCategories() {
@@ -71,13 +54,5 @@ public class Movie {
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
-    }
-
-    public List<Karakter> getKarakters() {
-        return karakters;
-    }
-
-    public void setKarakters(List<Karakter> karakters) {
-        this.karakters = karakters;
     }
 }
