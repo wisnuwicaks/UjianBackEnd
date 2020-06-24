@@ -8,6 +8,8 @@ import com.ujianbackend.movie.entity.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/characters")
 public class KarakterController {
@@ -52,6 +54,8 @@ public class KarakterController {
         findCharacter.setMovie(null);
         karakterRepo.deleteById(characterId);
     }
+
+
 
 
 }

@@ -3,6 +3,7 @@ package com.ujianbackend.movie.controller;
 import com.ujianbackend.movie.dao.CategoryRepo;
 import com.ujianbackend.movie.dao.MovieRepo;
 import com.ujianbackend.movie.entity.Category;
+import com.ujianbackend.movie.entity.Karakter;
 import com.ujianbackend.movie.entity.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -69,4 +70,11 @@ public class MovieController {
         Movie findMovie = movieRepo.findById(movieId).get();
         return findMovie.getCategories();
     }
+
+    @GetMapping("/{movieId}/characters")
+    public List<Karakter> getCharacterWithMoviesId(@PathVariable int movieId){
+        Movie findMovie = movieRepo.findById(movieId).get();
+        return findMovie.getKarakters();
+    }
+
 }
