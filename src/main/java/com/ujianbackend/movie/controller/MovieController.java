@@ -78,16 +78,7 @@ public class MovieController {
             findMovie.getCategories().remove(findCategory);
             movieRepo.save(findMovie);
         }
-//        findMovie.getCategories().forEach(category -> {
-//            if(category.equals(findCategory)){
-//                findMovie.getCategories().remove(category);
-//                movieRepo.save(findMovie);
-//            }
-//        });
-
         return findMovie;
-
-
     }
 
 
