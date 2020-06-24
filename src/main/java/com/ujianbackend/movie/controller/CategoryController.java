@@ -18,16 +18,19 @@ public class CategoryController {
     @Autowired
     private MovieRepo movieRepo;
 
+    //Route untuk menampilkan kategori
     @GetMapping("/allcategories")
     public Iterable<Category> getAllCategories(){
         return categoryRepo.findAll();
     }
 
+    //Route untuk menambah category
     @PostMapping("/addcategory")
     public Category addMovie(@RequestBody Category category){
         return categoryRepo.save(category);
     }
 
+    //Route untuk update category di table category
     @PutMapping("update/{categoryId}")
     public Category updateMovie(@PathVariable int categoryId,@RequestBody Category category){
         Category findCategory = categoryRepo.findById(categoryId).get();
@@ -35,18 +38,8 @@ public class CategoryController {
         return categoryRepo.save(category);
     }
 
-    @DeleteMapping("delete/{categoryId}")
-    public void deleteMovie(@PathVariable int categoryId){
-        Category findCategory = categoryRepo.findById(categoryId).get();
-        findCategory.getMovies().forEach(movie -> {
-            movie.getCategories().remove(findCategory);
-            movieRepo.save(movie);
-        });
 
-        findCategory.setMovies(null);
-        categoryRepo.deleteById(categoryId);
-    }
-
+    //Route untuk menampilkan movie dengan category tertentu
     @GetMapping("/{categoryId}/movies")
     public List<Movie> getMovieWithCategoryId(@PathVariable int categoryId){
         Category findCat = categoryRepo.findById(categoryId).get();

@@ -20,16 +20,19 @@ public class MovieController {
     @Autowired
     private CategoryRepo categoryRepo;
 
+    //route untuk menampilkan semua movie
     @GetMapping("/allmovies")
     public Iterable<Movie> getAllMovies(){
         return movieRepo.findAll();
     }
 
+    //Route untuk add movie
     @PostMapping("/addmovie")
     public Movie addMovie(@RequestBody Movie movie){
         return movieRepo.save(movie);
     }
 
+    //Route untuk menambahkan category ke movie tertentu
     @PostMapping("/{movieId}/categories/{categoryId}")
     public Movie addMovieCategory (@PathVariable int movieId, @PathVariable int categoryId){
         Category findCategory = categoryRepo.findById(categoryId).get();
@@ -39,6 +42,7 @@ public class MovieController {
 
     }
 
+    //Route untuk update/edit movie
     @PutMapping("update/{movieId}")
     public Movie updateMovie(@PathVariable int movieId,@RequestBody Movie movie){
         Movie findMovie = movieRepo.findById(movieId).get();
@@ -47,11 +51,12 @@ public class MovieController {
         return movieRepo.save(movie);
     }
 
+    //Route untuk delete movie serta relasinya dengan category
     @DeleteMapping("delete/{movieId}")
     public void deleteMovie(@PathVariable int movieId){
         Movie findMovie = movieRepo.findById(movieId).get();
         findMovie.getCategories().forEach(category -> {
-//            List<Movie> movieCategories = category.getMovies();
+
             category.getMovies().remove(findMovie);
             categoryRepo.save(category);
         });
@@ -62,12 +67,9 @@ public class MovieController {
 
     }
 
-    @GetMapping("/{movieId}/categories")
-    public List<Category> getCategoryWithMovieId(@PathVariable int movieId){
-        Movie findMovie = movieRepo.findById(movieId).get();
-        return findMovie.getCategories();
-    }
 
+
+    //route untuk delete category dari movie
     @PutMapping("/{movieId}/deletecategory/{categoryId}")
     public Movie removeCategoryFromMovie(@PathVariable int movieId, @PathVariable int categoryId){
         Movie findMovie = movieRepo.findById(movieId).get();
